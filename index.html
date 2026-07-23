@@ -1,0 +1,705 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Devika Aerocidade | An Aerocity-Inspired Community in Goa</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,500&family=Jost:wght@300;400;500;600&family=Space+Grotesk:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg-deep:#071815;
+    --bg-panel:#0d2420;
+    --bg-panel-2:#102b26;
+    --gold:#c9a24c;
+    --gold-bright:#f0d38c;
+    --teal-glow:#22c7a4;
+    --teal-dim:#0f544a;
+    --ivory:#f3ede2;
+    --muted:#9fb3ac;
+    --line:rgba(201,162,76,0.18);
+    --radius:2px;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--bg-deep);
+    color:var(--ivory);
+    font-family:'Jost', sans-serif;
+    font-weight:300;
+    line-height:1.65;
+    overflow-x:hidden;
+  }
+  ::selection{ background:var(--gold); color:#071815; }
+
+  h1,h2,h3,.serif{ font-family:'Cormorant Garamond', serif; font-weight:500; letter-spacing:0.01em; }
+
+  .eyebrow{
+    font-family:'Space Grotesk', monospace;
+    font-size:0.72rem;
+    letter-spacing:0.32em;
+    text-transform:uppercase;
+    color:var(--gold);
+    display:flex;
+    align-items:center;
+    gap:14px;
+  }
+  .eyebrow::before{
+    content:"";
+    width:28px; height:1px;
+    background:linear-gradient(90deg, var(--gold), transparent);
+  }
+
+  .wrap{ max-width:1200px; margin:0 auto; padding:0 40px; }
+  section{ position:relative; padding:130px 0; }
+
+  /* ---------- Ambient background glow ---------- */
+  .glow-orb{
+    position:absolute; border-radius:50%; filter:blur(90px); pointer-events:none; z-index:0;
+  }
+
+  /* ---------- Header ---------- */
+  header{
+    position:fixed; top:0; left:0; right:0; z-index:100;
+    background:rgba(7,24,21,0.55);
+    backdrop-filter: blur(16px) saturate(140%);
+    -webkit-backdrop-filter: blur(16px) saturate(140%);
+    border-bottom:1px solid var(--line);
+    transition: background .4s ease;
+  }
+  .nav-inner{
+    max-width:1200px; margin:0 auto; padding:18px 40px;
+    display:flex; align-items:center; justify-content:space-between;
+  }
+  .logo{
+    font-family:'Cormorant Garamond', serif;
+    font-size:1.5rem; letter-spacing:0.06em;
+    display:flex; flex-direction:column; line-height:1;
+  }
+  .logo b{ color:var(--gold-bright); font-weight:600; }
+  .logo span{
+    font-family:'Space Grotesk', monospace;
+    font-size:0.58rem; letter-spacing:0.35em; color:var(--muted);
+    margin-top:4px; text-transform:uppercase;
+  }
+  nav.links{ display:flex; gap:36px; }
+  nav.links a{
+    color:var(--ivory); text-decoration:none; font-size:0.86rem;
+    letter-spacing:0.03em; opacity:0.82; position:relative; padding-bottom:4px;
+    transition:opacity .3s ease;
+  }
+  nav.links a:hover{ opacity:1; }
+  nav.links a::after{
+    content:""; position:absolute; left:0; bottom:0; width:0; height:1px;
+    background:var(--gold); transition:width .35s ease;
+  }
+  nav.links a:hover::after{ width:100%; }
+  .cta-btn{
+    font-family:'Space Grotesk', monospace;
+    font-size:0.72rem; letter-spacing:0.14em; text-transform:uppercase;
+    color:#071815; background:linear-gradient(135deg, var(--gold-bright), var(--gold));
+    padding:12px 26px; border-radius:1px; text-decoration:none;
+    box-shadow:0 0 24px rgba(201,162,76,0.35), 0 0 0 1px rgba(255,255,255,0.15) inset;
+    transition:transform .3s ease, box-shadow .3s ease;
+    white-space:nowrap;
+  }
+  .cta-btn:hover{ transform:translateY(-2px); box-shadow:0 6px 30px rgba(201,162,76,0.55); }
+  .menu-toggle{ display:none; }
+
+  /* ---------- Hero ---------- */
+  .hero{
+    min-height:100vh; display:flex; align-items:center; padding-top:140px;
+    background:
+      radial-gradient(ellipse 60% 50% at 15% 20%, rgba(34,199,164,0.14), transparent 60%),
+      radial-gradient(ellipse 60% 60% at 85% 75%, rgba(201,162,76,0.14), transparent 60%),
+      linear-gradient(180deg, #071815 0%, #0a1f1b 100%);
+    position:relative; overflow:hidden;
+  }
+  .hero-grid-lines{
+    position:absolute; inset:0; opacity:0.35; z-index:0;
+    background-image:
+      linear-gradient(rgba(201,162,76,0.06) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(201,162,76,0.06) 1px, transparent 1px);
+    background-size:64px 64px;
+    mask-image: radial-gradient(ellipse 70% 60% at 50% 40%, black, transparent 75%);
+  }
+  .hero-inner{
+    position:relative; z-index:2; display:grid; grid-template-columns:1.1fr 0.9fr; gap:60px; align-items:center;
+  }
+  .hero-copy h1{
+    font-size:clamp(2.6rem, 5vw, 4.4rem); line-height:1.05; margin:22px 0 24px;
+    text-shadow:0 0 40px rgba(201,162,76,0.25);
+  }
+  .hero-copy h1 em{ font-style:italic; color:var(--gold-bright); }
+  .hero-copy p{ max-width:520px; color:var(--muted); font-size:1.05rem; margin-bottom:34px; }
+  .hero-actions{ display:flex; gap:18px; align-items:center; }
+  .btn-ghost{
+    font-family:'Space Grotesk', monospace; font-size:0.75rem; letter-spacing:0.14em; text-transform:uppercase;
+    color:var(--ivory); border:1px solid rgba(243,237,226,0.3); padding:14px 26px; text-decoration:none;
+    transition:all .3s ease;
+  }
+  .btn-ghost:hover{ border-color:var(--gold); color:var(--gold-bright); box-shadow:0 0 20px rgba(201,162,76,0.2); }
+
+  .hero-visual{
+    position:relative; aspect-ratio: 4/5; border-radius:4px; overflow:hidden;
+    border:1px solid rgba(201,162,76,0.35);
+    box-shadow:0 40px 90px -30px rgba(0,0,0,0.7), 0 0 60px -10px rgba(34,199,164,0.25);
+    transform:perspective(1000px) rotateY(-6deg) rotateX(2deg);
+    transition:transform .6s ease;
+  }
+  .hero-visual:hover{ transform:perspective(1000px) rotateY(-2deg) rotateX(0deg); }
+  .placeholder{
+    width:100%; height:100%; display:flex; flex-direction:column; align-items:center; justify-content:center;
+    gap:14px; text-align:center; padding:30px;
+    background:
+      repeating-linear-gradient(135deg, rgba(201,162,76,0.05) 0 2px, transparent 2px 14px),
+      linear-gradient(160deg, #102b26, #0a1f1b 60%, #071815);
+    border:1px dashed rgba(201,162,76,0.4);
+  }
+  .placeholder .icon{
+    width:54px; height:54px; border:1px solid var(--gold); border-radius:50%;
+    display:flex; align-items:center; justify-content:center; color:var(--gold-bright); font-size:1.4rem;
+  }
+  .placeholder .label{ font-family:'Space Grotesk', monospace; font-size:0.68rem; letter-spacing:0.12em;
+    text-transform:uppercase; color:var(--muted); }
+  .placeholder .sub{ font-size:0.78rem; color:rgba(159,179,172,0.7); max-width:220px; }
+  .fill-img{ width:100%; height:100%; object-fit:cover; display:block; }
+  .img-holder{ border:none; background:none; padding:0; }
+
+  .ticker{
+    position:relative; z-index:2; border-top:1px solid var(--line); border-bottom:1px solid var(--line);
+    padding:20px 0; overflow:hidden; background:rgba(0,0,0,0.15);
+  }
+  .ticker-track{ display:flex; gap:60px; white-space:nowrap; animation:scroll 28s linear infinite; width:max-content; }
+  .ticker-track span{ font-family:'Space Grotesk', monospace; font-size:0.78rem; letter-spacing:0.2em; color:var(--muted); }
+  .ticker-track span b{ color:var(--gold-bright); }
+  @keyframes scroll{ from{ transform:translateX(0);} to{ transform:translateX(-50%);} }
+
+  /* ---------- Section headers ---------- */
+  .sec-head{ max-width:760px; margin-bottom:64px; }
+  .sec-head h2{ font-size:clamp(2rem, 3.4vw, 2.8rem); margin-top:18px; }
+  .sec-head p{ color:var(--muted); margin-top:18px; font-size:1.02rem; }
+
+  /* ---------- Concept split ---------- */
+  .split{ display:grid; grid-template-columns:0.95fr 1.05fr; gap:70px; align-items:center; }
+  .split.reverse .split-media{ order:2; }
+  .split-media .placeholder{ aspect-ratio:4/3; border-radius:3px; }
+  .split-copy h3{ font-size:1.6rem; margin-bottom:16px; }
+  .split-copy p{ color:var(--muted); margin-bottom:16px; }
+  .split-copy .mark{ color:var(--gold-bright); }
+
+  /* ---------- Differentiators comparison ---------- */
+  .compare{ display:grid; grid-template-columns:1fr 1fr; gap:2px; background:var(--line); border:1px solid var(--line); }
+  .compare-col{ background:var(--bg-panel); padding:46px 42px; position:relative; }
+  .compare-col.highlight{ background:linear-gradient(180deg, #123128, #0d2420); }
+  .compare-col.highlight::before{
+    content:""; position:absolute; inset:0; box-shadow: inset 0 0 80px rgba(34,199,164,0.12); pointer-events:none;
+  }
+  .compare-col h4{
+    font-family:'Space Grotesk', monospace; font-size:0.78rem; letter-spacing:0.18em; text-transform:uppercase;
+    margin-bottom:22px; color:var(--muted);
+  }
+  .compare-col.highlight h4{ color:var(--gold-bright); }
+  .compare-col ul{ list-style:none; display:flex; flex-direction:column; gap:16px; }
+  .compare-col li{ display:flex; gap:12px; font-size:0.95rem; color:var(--ivory); opacity:0.9; }
+  .compare-col li::before{ content:"—"; color:var(--muted); flex-shrink:0; }
+  .compare-col.highlight li::before{ content:"◆"; color:var(--teal-glow); font-size:0.6rem; margin-top:6px; }
+
+  /* ---------- Ecosystem / signature diagram ---------- */
+  .ecosystem{ background:radial-gradient(ellipse 80% 60% at 50% 50%, rgba(34,199,164,0.08), transparent 70%); }
+  .diagram-wrap{ position:relative; width:100%; max-width:820px; margin:0 auto; }
+  .diagram-wrap svg{ width:100%; height:auto; overflow:visible; }
+  .node-label{ font-family:'Space Grotesk', monospace; font-size:11px; letter-spacing:0.08em; fill:var(--ivory); text-transform:uppercase; }
+  .node-sub{ font-family:'Jost', sans-serif; font-size:9.5px; fill:var(--muted); }
+  .pulse-line{ stroke-dasharray:6 8; animation:dash 3.5s linear infinite; }
+  @keyframes dash{ to{ stroke-dashoffset:-140; } }
+  .node-glow{ filter:drop-shadow(0 0 10px rgba(34,199,164,0.7)); }
+  .node-glow.gold{ filter:drop-shadow(0 0 12px rgba(201,162,76,0.8)); }
+
+  /* ---------- Location ---------- */
+  .location-panel{ position:relative; border:1px solid var(--line); border-radius:3px; overflow:hidden; }
+  .location-grid{ display:grid; grid-template-columns:1fr 1fr; }
+  .location-media .placeholder{ height:100%; min-height:420px; border:none; border-radius:0; }
+  .location-copy{ padding:56px; }
+  .pin-list{ list-style:none; display:flex; flex-direction:column; gap:18px; margin-top:26px; }
+  .pin-list li{ display:flex; gap:14px; align-items:flex-start; font-size:0.92rem; color:var(--ivory); opacity:0.9; }
+  .pin-dot{ width:8px; height:8px; margin-top:6px; border-radius:50%; background:var(--gold); box-shadow:0 0 10px var(--gold); flex-shrink:0; }
+
+  /* ---------- Features grid ---------- */
+  .feature-grid{ display:grid; grid-template-columns:repeat(4, 1fr); gap:1px; background:var(--line); border:1px solid var(--line); }
+  .feature-card{ background:var(--bg-panel); padding:38px 30px; transition:background .35s ease, transform .35s ease; }
+  .feature-card:hover{ background:var(--bg-panel-2); transform:translateY(-4px); }
+  .feature-num{ font-family:'Space Grotesk', monospace; font-size:0.72rem; color:var(--gold); letter-spacing:0.1em; }
+  .feature-card h4{ font-family:'Cormorant Garamond', serif; font-size:1.3rem; margin:14px 0 10px; }
+  .feature-card p{ font-size:0.88rem; color:var(--muted); }
+
+  /* ---------- Growth quote section ---------- */
+  .quote-panel{
+    border-left:2px solid var(--gold); padding:8px 0 8px 40px; max-width:820px; margin:0 auto;
+  }
+  .quote-panel p.big{ font-family:'Cormorant Garamond', serif; font-style:italic; font-size:1.7rem; line-height:1.5; color:var(--ivory); }
+  .quote-panel .attrib{ margin-top:22px; font-family:'Space Grotesk', monospace; font-size:0.75rem; letter-spacing:0.1em; color:var(--muted); text-transform:uppercase; }
+
+  /* ---------- Developer vision ---------- */
+  .vision-panel{
+    background:linear-gradient(135deg, #0d2420, #071815 70%);
+    border:1px solid var(--line); padding:70px; position:relative; overflow:hidden;
+  }
+  .vision-panel::after{
+    content:""; position:absolute; width:340px; height:340px; border-radius:50%;
+    background:radial-gradient(circle, rgba(201,162,76,0.18), transparent 70%);
+    top:-120px; right:-80px; filter:blur(10px);
+  }
+  .vision-grid{ display:grid; grid-template-columns:1fr 1fr; gap:60px; position:relative; z-index:1; }
+  .vision-stats{ display:grid; grid-template-columns:1fr 1fr; gap:30px; align-self:start; }
+  .stat b{ font-family:'Cormorant Garamond', serif; font-size:2.4rem; color:var(--gold-bright); display:block; }
+  .stat span{ font-family:'Space Grotesk', monospace; font-size:0.7rem; letter-spacing:0.1em; color:var(--muted); text-transform:uppercase; }
+
+  /* ---------- Reviews ---------- */
+  .reviews-grid{ display:grid; grid-template-columns:repeat(3, 1fr); gap:28px; }
+  .review-card{
+    background:var(--bg-panel); border:1px solid var(--line); padding:34px; border-radius:3px;
+    transition:transform .35s ease, box-shadow .35s ease;
+  }
+  .review-card:hover{ transform:translateY(-6px); box-shadow:0 24px 50px -20px rgba(0,0,0,0.6), 0 0 30px -10px rgba(34,199,164,0.2); }
+  .stars{ color:var(--gold); letter-spacing:3px; margin-bottom:16px; font-size:0.9rem; }
+  .review-card p{ font-size:0.92rem; color:var(--muted); margin-bottom:20px; }
+  .review-name{ font-family:'Space Grotesk', monospace; font-size:0.72rem; letter-spacing:0.08em; color:var(--ivory); text-transform:uppercase; }
+
+  /* ---------- FAQ ---------- */
+  .faq-item{ border-bottom:1px solid var(--line); }
+  .faq-item summary{
+    list-style:none; cursor:pointer; padding:26px 0; display:flex; justify-content:space-between; align-items:center;
+    font-family:'Cormorant Garamond', serif; font-size:1.25rem;
+  }
+  .faq-item summary::-webkit-details-marker{ display:none; }
+  .faq-item summary .plus{ font-family:'Space Grotesk', monospace; color:var(--gold); font-size:1.1rem; transition:transform .3s ease; }
+  .faq-item[open] summary .plus{ transform:rotate(45deg); }
+  .faq-item .faq-a{ padding:0 0 28px; color:var(--muted); max-width:760px; font-size:0.95rem; }
+
+  /* ---------- Final CTA ---------- */
+  .final-cta{
+    text-align:center; background:
+      radial-gradient(ellipse 60% 80% at 50% 0%, rgba(201,162,76,0.14), transparent 65%),
+      var(--bg-deep);
+    border-top:1px solid var(--line);
+  }
+  .final-cta h2{ font-size:clamp(2.2rem, 4vw, 3.2rem); max-width:760px; margin:20px auto 30px; }
+  .contact-row{ display:flex; gap:40px; justify-content:center; margin-top:50px; flex-wrap:wrap; }
+  .contact-item{ font-family:'Space Grotesk', monospace; font-size:0.8rem; color:var(--muted); letter-spacing:0.04em; }
+  .contact-item b{ display:block; color:var(--gold-bright); font-family:'Cormorant Garamond', serif; font-size:1.2rem; margin-bottom:4px; }
+
+  footer{ padding:50px 0; border-top:1px solid var(--line); }
+  .footer-inner{ display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:20px; }
+  .footer-links{ display:flex; gap:28px; flex-wrap:wrap; }
+  .footer-links a{ color:var(--muted); text-decoration:none; font-size:0.82rem; }
+  .footer-links a:hover{ color:var(--gold-bright); }
+  .disclaimer{ font-size:0.75rem; color:rgba(159,179,172,0.55); max-width:900px; margin-top:24px; }
+
+  @media (max-width: 980px){
+    nav.links{ display:none; }
+    .hero-inner, .split, .split.reverse .split-media, .location-grid, .vision-grid{ grid-template-columns:1fr; }
+    .split.reverse .split-media{ order:0; }
+    .compare{ grid-template-columns:1fr; }
+    .feature-grid{ grid-template-columns:repeat(2,1fr); }
+    .reviews-grid{ grid-template-columns:1fr; }
+    section{ padding:80px 0; }
+    .wrap{ padding:0 22px; }
+    .vision-panel{ padding:40px; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="nav-inner">
+    <div class="logo"><b>DEVIKA</b> AEROCIDADE<span>Goa &nbsp;·&nbsp; Aerocity-Inspired Living</span></div>
+    <nav class="links">
+      <a href="#overview">Overview</a>
+      <a href="#concept">The Concept</a>
+      <a href="#ecosystem">Ecosystem</a>
+      <a href="#location">Location</a>
+      <a href="#vision">Why Devika</a>
+      <a href="#reviews">Reviews</a>
+      <a href="#faq">FAQs</a>
+    </nav>
+    <a href="#contact" class="cta-btn">Enquire Now</a>
+  </div>
+</header>
+
+<!-- HERO -->
+<section class="hero" id="overview">
+  <div class="hero-grid-lines"></div>
+  <div class="wrap hero-inner">
+    <div class="hero-copy">
+      <div class="eyebrow">South Goa · Master-Planned Township</div>
+      <h1>An <em>Aerocity-Inspired</em><br>Community in Goa</h1>
+      <p>Devika Aerocidade brings together residential living, commerce, hospitality, and infrastructure into one thoughtfully planned ecosystem — designed for the way people actually want to live, work, and invest today.</p>
+      <div class="hero-actions">
+        <a href="#contact" class="cta-btn">Request Private Preview</a>
+        <a href="#concept" class="btn-ghost">Explore the Concept</a>
+      </div>
+    </div>
+    <div class="hero-visual">
+      <img src="assets/aero3.jpg" alt="Devika Aerocidade, Goa" class="fill-img">
+    </div>
+  </div>
+</section>
+
+<div class="ticker">
+  <div class="ticker-track">
+    <span><b>Residential</b> &nbsp; · &nbsp; Commercial &nbsp; · &nbsp; Retail &nbsp; · &nbsp; Hospitality &nbsp; · &nbsp; Green Spaces &nbsp; · &nbsp; Infrastructure &nbsp; · &nbsp; <b>Residential</b> &nbsp; · &nbsp; Commercial &nbsp; · &nbsp; Retail &nbsp; · &nbsp; Hospitality &nbsp; · &nbsp; Green Spaces &nbsp; · &nbsp; Infrastructure</span>
+    <span><b>Residential</b> &nbsp; · &nbsp; Commercial &nbsp; · &nbsp; Retail &nbsp; · &nbsp; Hospitality &nbsp; · &nbsp; Green Spaces &nbsp; · &nbsp; Infrastructure &nbsp; · &nbsp; <b>Residential</b> &nbsp; · &nbsp; Commercial &nbsp; · &nbsp; Retail &nbsp; · &nbsp; Hospitality &nbsp; · &nbsp; Green Spaces &nbsp; · &nbsp; Infrastructure</span>
+  </div>
+</div>
+
+<!-- CONCEPT -->
+<section id="concept">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="eyebrow">The Concept</div>
+      <h2>What Is an Aerocity-Inspired Community?</h2>
+      <p>Its real strength lies in creating self-sustained communities — where residences, commercial hubs, retail, hospitality, green areas, and public infrastructure are planned together, not developed independently.</p>
+    </div>
+    <div class="split">
+      <div class="split-media">
+        <div class="placeholder img-holder">
+          <img src="assets/aero2.jpg" alt="Devika Aerocidade concept" class="fill-img">
+        </div>
+      </div>
+      <div class="split-copy">
+        <h3>Building the ecosystem from day one</h3>
+        <p>Instead of waiting years for surrounding infrastructure to evolve organically, <span class="mark">Devika Aerocidade</span> establishes that ecosystem from the very beginning — giving residents convenience and investors confidence.</p>
+        <p>This is exactly where Devika Aerocidade in Goa stands apart from conventional projects that sell isolated plots, apartments, or commercial units without considering how the surrounding area will evolve.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- DIFFERENTIATORS -->
+<section>
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="eyebrow">The Difference</div>
+      <h2>Aerocidade vs. the Traditional Project</h2>
+      <p>Many developments focus on selling individual units without a plan for how the neighborhood evolves. Devika Aerocidade follows a different philosophy from the outset.</p>
+    </div>
+  </div>
+  <div class="wrap" style="padding:0;">
+    <div class="compare">
+      <div class="compare-col">
+        <h4>Traditional Development</h4>
+        <ul>
+          <li>Sells isolated plots, apartments, or commercial units</li>
+          <li>Value depends on future government or private infrastructure</li>
+          <li>Residential and commercial zones planned in isolation</li>
+          <li>Daily needs often require additional travel</li>
+        </ul>
+      </div>
+      <div class="compare-col highlight">
+        <h4>Devika Aerocidade, Goa</h4>
+        <ul>
+          <li>Planned township inspired by globally recognized aerocity concepts</li>
+          <li>Integrated infrastructure established from the beginning</li>
+          <li>Mixed-use planning supports living, business & convenience together</li>
+          <li>Structured zoning balances privacy with accessibility</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ECOSYSTEM DIAGRAM (signature) -->
+<section id="ecosystem" class="ecosystem">
+  <div class="wrap">
+    <div class="sec-head" style="margin-left:auto; margin-right:auto; text-align:center;">
+      <div class="eyebrow" style="justify-content:center;">The Ecosystem</div>
+      <h2>Every Element, Planned to Complement the Next</h2>
+      <p style="margin-left:auto; margin-right:auto;">Residential areas benefit from nearby commerce. Retail receives steady footfall. Hospitality supports tourism. Infrastructure ties it all together — a vibrant ecosystem, not a collection of disconnected developments.</p>
+    </div>
+
+    <div class="diagram-wrap">
+      <svg viewBox="0 0 800 560" xmlns="http://www.w3.org/2000/svg">
+        <!-- connector lines -->
+        <g stroke="rgba(34,199,164,0.55)" stroke-width="1.4" fill="none">
+          <path class="pulse-line" d="M400,280 L400,90"/>
+          <path class="pulse-line" d="M400,280 L610,160"/>
+          <path class="pulse-line" d="M400,280 L680,340"/>
+          <path class="pulse-line" d="M400,280 L560,470"/>
+          <path class="pulse-line" d="M400,280 L240,470"/>
+          <path class="pulse-line" d="M400,280 L120,340"/>
+          <path class="pulse-line" d="M400,280 L190,160"/>
+        </g>
+
+        <!-- central hub -->
+        <circle cx="400" cy="280" r="46" fill="#0d2420" stroke="#c9a24c" stroke-width="1.5" class="node-glow gold"/>
+        <text x="400" y="276" text-anchor="middle" class="node-label" font-weight="600">DEVIKA</text>
+        <text x="400" y="292" text-anchor="middle" class="node-sub">AEROCIDADE</text>
+
+        <!-- Residential -->
+        <circle cx="400" cy="90" r="34" fill="#0f2a24" stroke="#22c7a4" stroke-width="1.2" class="node-glow"/>
+        <text x="400" y="86" text-anchor="middle" class="node-label">Residential</text>
+        <text x="400" y="100" text-anchor="middle" class="node-sub">Living spaces</text>
+
+        <!-- Commercial -->
+        <circle cx="610" cy="160" r="34" fill="#0f2a24" stroke="#22c7a4" stroke-width="1.2" class="node-glow"/>
+        <text x="610" y="156" text-anchor="middle" class="node-label">Commercial</text>
+        <text x="610" y="170" text-anchor="middle" class="node-sub">Business hubs</text>
+
+        <!-- Retail -->
+        <circle cx="680" cy="340" r="34" fill="#0f2a24" stroke="#22c7a4" stroke-width="1.2" class="node-glow"/>
+        <text x="680" y="336" text-anchor="middle" class="node-label">Retail</text>
+        <text x="680" y="350" text-anchor="middle" class="node-sub">Everyday convenience</text>
+
+        <!-- Hospitality -->
+        <circle cx="560" cy="470" r="34" fill="#0f2a24" stroke="#22c7a4" stroke-width="1.2" class="node-glow"/>
+        <text x="560" y="466" text-anchor="middle" class="node-label">Hospitality</text>
+        <text x="560" y="480" text-anchor="middle" class="node-sub">Tourism &amp; guests</text>
+
+        <!-- Green Spaces -->
+        <circle cx="240" cy="470" r="34" fill="#0f2a24" stroke="#22c7a4" stroke-width="1.2" class="node-glow"/>
+        <text x="240" y="466" text-anchor="middle" class="node-label">Green Spaces</text>
+        <text x="240" y="480" text-anchor="middle" class="node-sub">Recreation</text>
+
+        <!-- Infrastructure -->
+        <circle cx="120" cy="340" r="34" fill="#0f2a24" stroke="#22c7a4" stroke-width="1.2" class="node-glow"/>
+        <text x="120" y="336" text-anchor="middle" class="node-label">Infrastructure</text>
+        <text x="120" y="350" text-anchor="middle" class="node-sub">Roads &amp; utilities</text>
+
+        <!-- Connectivity -->
+        <circle cx="190" cy="160" r="34" fill="#0f2a24" stroke="#22c7a4" stroke-width="1.2" class="node-glow"/>
+        <text x="190" y="156" text-anchor="middle" class="node-label">Connectivity</text>
+        <text x="190" y="170" text-anchor="middle" class="node-sub">Regional access</text>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<!-- LOCATION -->
+<section id="location">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="eyebrow">Strategic Location</div>
+      <h2>Positioned for Connectivity &amp; Growth</h2>
+      <p>Location alone is no longer enough. Buyers now weigh accessibility, surrounding infrastructure, and future development — Devika Aerocidade is built where all of these converge.</p>
+    </div>
+    <div class="location-panel">
+      <div class="location-grid">
+        <div class="location-media">
+          <div class="placeholder img-holder">
+            <img src="assets/aero1.jpg" alt="Devika Aerocidade location" class="fill-img">
+          </div>
+        </div>
+        <div class="location-copy">
+          <h3 class="serif" style="font-size:1.6rem; margin-bottom:8px;">South Goa, Well-Connected</h3>
+          <p style="color:var(--muted); font-size:0.95rem;">Benefiting from South Goa's rapidly developing infrastructure, the location remains connected to key transportation corridors, employment centers, tourism destinations, and everyday conveniences.</p>
+          <ul class="pin-list">
+            <li><span class="pin-dot"></span> Close to major transport corridors and regional connectivity</li>
+            <li><span class="pin-dot"></span> Proximity to established employment and business centers</li>
+            <li><span class="pin-dot"></span> Near popular South Goa tourism and lifestyle destinations</li>
+            <li><span class="pin-dot"></span> Positioned within an actively developing infrastructure corridor</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- INTEGRATED PLANNING FEATURES -->
+<section>
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="eyebrow">Integrated Planning</div>
+      <h2>Convenience, Without Compromise</h2>
+      <p>Traditional projects often require extra travel for daily needs. Integrated planning brings the essentials closer together, improving both functionality and quality of life.</p>
+    </div>
+  </div>
+  <div class="wrap" style="padding:0;">
+    <div class="feature-grid">
+      <div class="feature-card">
+        <div class="feature-num">Roads</div>
+        <h4>Planned Circulation</h4>
+        <p>Organized road networks designed alongside the community, not retrofitted after it.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-num">Green</div>
+        <h4>Open &amp; Green Spaces</h4>
+        <p>Recreational areas woven through the township for everyday wellbeing.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-num">Zones</div>
+        <h4>Structured Zoning</h4>
+        <p>Residential privacy preserved alongside vibrant, accessible commercial districts.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-num">Future</div>
+        <h4>Future-Ready Infrastructure</h4>
+        <p>Utilities and systems planned to support the community as it grows.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- GROWTH QUOTE -->
+<section>
+  <div class="wrap">
+    <div class="quote-panel">
+      <p class="big">"Aerocity-inspired communities address the balance between residential comfort and commercial opportunity through structured zoning and master planning — allowing neighborhoods to stay private while districts remain vibrant."</p>
+      <div class="attrib">On residential &amp; commercial growth, together</div>
+    </div>
+  </div>
+</section>
+
+<!-- DEVELOPER VISION -->
+<section id="vision">
+  <div class="wrap">
+    <div class="vision-panel">
+      <div class="vision-grid">
+        <div>
+          <div class="eyebrow">Developer Vision</div>
+          <h2 style="font-size:2rem; margin:18px 0 18px;">Why Devika Group</h2>
+          <p style="color:var(--muted); font-size:0.97rem; margin-bottom:16px;">Devika Group has built its reputation delivering thoughtfully planned real estate developments across different markets. That experience shapes the vision behind Devika Aerocidade — where the emphasis extends beyond construction to creating an organized community capable of supporting future growth.</p>
+          <p style="color:var(--muted); font-size:0.97rem;">A strong development philosophy is one of the most valuable assets for investors looking beyond immediate returns.</p>
+        </div>
+        <div class="vision-stats">
+          <div class="stat"><b>360°</b><span>Integrated Township Planning</span></div>
+          <div class="stat"><b>6+</b><span>Ecosystem Components</span></div>
+          <div class="stat"><b>South Goa</b><span>Strategic Location</span></div>
+          <div class="stat"><b>Long-Term</b><span>Investment Vision</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- REVIEWS -->
+<section id="reviews">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="eyebrow">What People Are Saying</div>
+      <h2>Devika Aerocidade in Goa — Reviews</h2>
+      <p>Many reviews focus on the project's concept rather than only its property offerings — the emphasis on planned development, connectivity, and an integrated township vision.</p>
+    </div>
+    <div class="reviews-grid">
+      <div class="review-card">
+        <div class="stars">★★★★★</div>
+        <p>"What stood out to us was the planning philosophy — it doesn't feel like buying a plot, it feels like buying into a community that's designed to grow well."</p>
+        <div class="review-name">— Prospective Homebuyer</div>
+      </div>
+      <div class="review-card">
+        <div class="stars">★★★★★</div>
+        <p>"The connectivity and integrated approach make it stand out from other South Goa listings we looked at. The concept is genuinely different."</p>
+        <div class="review-name">— Long-Term Investor</div>
+      </div>
+      <div class="review-card">
+        <div class="stars">★★★★★</div>
+        <p>"We appreciated that the vision goes beyond construction — the emphasis on infrastructure and zoning gives real confidence for the future."</p>
+        <div class="review-name">— Second-Home Seeker</div>
+      </div>
+    </div>
+    <p class="disclaimer" style="margin-top:34px;">Illustrative reviews shown for presentation purposes. Prospective buyers should review official project information, visit the site, and consult authorized representatives before making any investment decision.</p>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section id="faq">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="eyebrow">Frequently Asked Questions</div>
+      <h2>Everything You Need to Know</h2>
+    </div>
+    <div class="faq-list">
+      <details class="faq-item" open>
+        <summary>What is Devika Aerocidade in Goa? <span class="plus">+</span></summary>
+        <div class="faq-a">A master-planned, aerocity-inspired development designed to integrate residential, commercial, retail, and lifestyle spaces within a single, thoughtfully planned community.</div>
+      </details>
+      <details class="faq-item">
+        <summary>How is an aerocity-inspired community different from traditional projects? <span class="plus">+</span></summary>
+        <div class="faq-a">Traditional projects often focus on individual properties. Aerocity-inspired developments emphasize integrated infrastructure, mixed-use planning, connectivity, and long-term urban growth.</div>
+      </details>
+      <details class="faq-item">
+        <summary>Where is the Devika Aerocidade in Goa location? <span class="plus">+</span></summary>
+        <div class="faq-a">Strategically positioned in South Goa, offering strong connectivity to major transport routes, business corridors, and popular lifestyle destinations — suitable for both investment and end-use.</div>
+      </details>
+      <details class="faq-item">
+        <summary>Are Devika Aerocidade in Goa reviews positive? <span class="plus">+</span></summary>
+        <div class="faq-a">Many reviews appreciate the project's planning philosophy, integrated township concept, and future-oriented vision. As with any investment, buyers should conduct independent research and visit the project.</div>
+      </details>
+      <details class="faq-item">
+        <summary>Is Devika Aerocidade in Goa suitable for long-term investment? <span class="plus">+</span></summary>
+        <div class="faq-a">Its integrated planning, strategic location, and aerocity-inspired concept make it an attractive option for long-term value — though decisions should always consider individual financial goals and due diligence.</div>
+      </details>
+      <details class="faq-item">
+        <summary>Who should consider investing in Devika Aerocidade? <span class="plus">+</span></summary>
+        <div class="faq-a">Homebuyers, second-home seekers, business owners, and long-term investors who prefer planned communities over conventional standalone developments and value future-ready infrastructure.</div>
+      </details>
+    </div>
+  </div>
+</section>
+
+<!-- FINAL CTA -->
+<section class="final-cta" id="contact">
+  <div class="wrap">
+    <div class="eyebrow" style="justify-content:center;">Get In Touch</div>
+    <h2 class="serif">Discover the Vision Behind<br>Devika Aerocidade, Goa</h2>
+    <a href="#" class="cta-btn">Enquire Now</a>
+    <div class="contact-row">
+      <div class="contact-item"><b>Call</b>+91-XXXXX-XXXXX</div>
+      <div class="contact-item"><b>Email</b>enquiry@devikaaerocidade.com</div>
+      <div class="contact-item"><b>Visit</b>South Goa, India</div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap footer-inner">
+    <div class="logo"><b>DEVIKA</b> AEROCIDADE</div>
+    <div class="footer-links">
+      <a href="#overview">Overview</a>
+      <a href="#concept">Concept</a>
+      <a href="#location">Location</a>
+      <a href="#reviews">Reviews</a>
+      <a href="#faq">FAQs</a>
+    </div>
+  </div>
+  <div class="wrap">
+    <p class="disclaimer">This page is for informational and presentation purposes. Prospective buyers should always review official project information, visit the site, and consult authorized representatives before making any investment decision. © 2026 Devika Aerocidade, Goa. All rights reserved.</p>
+  </div>
+</footer>
+
+<script>
+  // Subtle 3D tilt for hero visual & review cards on pointer move
+  function applyTilt(el, intensity){
+    el.addEventListener('mousemove', (e)=>{
+      const r = el.getBoundingClientRect();
+      const x = (e.clientX - r.left)/r.width - 0.5;
+      const y = (e.clientY - r.top)/r.height - 0.5;
+      el.style.transform = `perspective(1000px) rotateY(${x*intensity}deg) rotateX(${-y*intensity}deg)`;
+    });
+    el.addEventListener('mouseleave', ()=>{
+      el.style.transform = 'perspective(1000px) rotateY(-6deg) rotateX(2deg)';
+    });
+  }
+  const heroVisual = document.querySelector('.hero-visual');
+  if(heroVisual) applyTilt(heroVisual, 8);
+
+  document.querySelectorAll('.review-card').forEach(card=>{
+    card.addEventListener('mousemove', (e)=>{
+      const r = card.getBoundingClientRect();
+      const x = (e.clientX - r.left)/r.width - 0.5;
+      const y = (e.clientY - r.top)/r.height - 0.5;
+      card.style.transform = `translateY(-6px) perspective(800px) rotateY(${x*6}deg) rotateX(${-y*6}deg)`;
+    });
+    card.addEventListener('mouseleave', ()=>{ card.style.transform=''; });
+  });
+
+  // Header background intensifies on scroll
+  const header = document.querySelector('header');
+  window.addEventListener('scroll', ()=>{
+    if(window.scrollY > 40){ header.style.background = 'rgba(7,24,21,0.85)'; }
+    else{ header.style.background = 'rgba(7,24,21,0.55)'; }
+  });
+</script>
+
+</body>
+</html>
